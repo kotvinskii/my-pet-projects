@@ -1,0 +1,14 @@
+print("Это калькулятор в котором можно узнать ежемесячные платежы по действующим кредитам и займам")
+
+
+def realize_calculator():
+    func = input("Введите create, если хотите рассчитать платеж по новому кредиту\nВведите Quit, если хотите выйти из приложения\n ")
+    if func == 'create':
+        sum_credit = float(input("Введите сумму вашего займа: "))
+        years = float(input("Сколько лет вы будете выплачивать кредит: "))
+        apr = float(input('Ваша процентная ставка: '))
+        monthly_interest_rate = apr / 1200 # расчет ставки
+        amount_of_months = years * 12 # сколько месяцев выплачивать кредит
+        monthly_payment = sum_credit * monthly_interest_rate / (1 - (1 + monthly_interest_rate) ** (-amount_of_months)) # ежемесячный платеж по кредиту
+        print("Ежемесячный платеж по вашему кредиту", round(monthly_payment, 2))
+realize_calculator()
