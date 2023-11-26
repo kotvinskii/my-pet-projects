@@ -1,0 +1,14 @@
+import socket
+
+
+lang = input("Введите язык: ")
+client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client.connect(('localhost', 1337)) # установка соединения с socket
+"""Цикл, который переводит сообщения"""
+while True:
+    message = input('Введите сообщение, которое хотите перевести, если вы хотите перестать посылать сообщения, введите SSTOP: ')
+    if message == 'SSTOP':
+        client.close() # прекращает отправку сообщения клиент-сервера
+        break
+    else:
+        client.send(f'{lang}{message}'.encode()) # отправляет сообщения клиент-сервера
