@@ -1,0 +1,19 @@
+from googletrans import Translator
+
+
+def text_translate(text='How are you?', src='en', dest='ru'):
+    """Создаём класс Translator, который будем проверять на ошибку, если ошибка существует, то мы её вызываем"""
+    try:
+        translater = Translator()
+        translation = translater.translate(text=text, src=src, dest=dest)
+
+        return translation.text
+    except Exception as ex:
+        return ex
+
+"""функция где мы переводим введённый текст"""
+def main():
+    print(text_translate(text='I love Messi', src='en', dest='ru'))
+
+if __name__ == '__main__':
+    main()
