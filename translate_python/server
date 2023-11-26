@@ -1,0 +1,22 @@
+import socket # модуль, который настраивает клиентно-серверное взаимодействие
+from googletrans import Translator
+
+
+translator = Translator() # объект класса Translator
+server_lang = 'en' # язык, который будет использоваться на сервере
+"""Скрипт сервера"""
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.bind(('localhost', 1337)) # локальный сервер и порт
+server.listen()
+
+client_addr, server_addr = server.accept() # устанавливает соединение между клиентом и сервером
+"""Цикл, который обрабатывает сообщения от клиента"""
+while True:
+    message = client_addr.recv(1024).decode() # кодируем байтовое сообщение клиента в текстовый формат
+    lang = message[1:message.index(']')]
+    trans = translator.translate(
+        message[1:message.index(']')],
+        src=lang,
+        dest=server_lang
+    )
+    print(trans.text) # вывод перевода
