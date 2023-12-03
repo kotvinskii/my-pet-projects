@@ -1,0 +1,19 @@
+import pywhatkit
+
+def send_message(): # функция отправляющая определенные сообщения на определенный номер
+    mobile_phone = input("Введите номер получателя: ")
+    message = input("Введите текст сообщения: ")
+    pywhatkit.sendwhatmsg_instantly(phone_no=mobile_phone, message=message)
+
+def time_send_message(): # функция отправляющая сообщения в определенное время
+    mobile_phone = input("Введите номер получателя: ")
+    message = input("Введите текст сообщения: ")
+    hour = int(input("Введите час в который нужно отправить сообщения(от 0 до 23): "))
+    minutes = int(input("Введите минуту в которую нужно отправить сообщения(от 0 до 59): " ))
+    pywhatkit.sendwhatmsg_instantly(phone_no=mobile_phone, message=message, time_hour=hour, time_min=minutes)
+
+def main():
+    send_message()
+
+if __name__ == '__main__':
+    main()
