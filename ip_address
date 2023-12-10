@@ -1,0 +1,35 @@
+import requests
+from pyfiglet import Figlet
+
+
+def get_info_ip_address(ip='127.0.0.1'): # функция, которая выводит информацию о введенном ip-адресе
+    try:
+        response = requests.get(url=f'http://ip-api.com/json/{ip}').json()
+        print(response)
+
+        data = {
+           '[IP]': response.get('query'),
+           '[Int prov]': response.get('isp'),
+           '[Org]': response.get('org'),
+           '[Country]': response.get('country'),
+           '[Region Name]': response.get('regionName'),
+           '[City]': response.get('city'),
+           '[ZIP]': response.get('zip'),
+           '[Lat]': response.get('lat'),
+           '[Lon]': response.get('lon'),
+        }
+
+        for k, v in data.items(): # вывод данных об ip-адресе в формате {k}: {v}
+            print(f'{k}: {v}')
+
+    except requests.exceptions.ConnectionError:
+        print("Кажется пошло что-то не так! Проверьте подключение")
+
+def main(): # функция, в которой вызывается информация ip-адреса
+    preview_text = Figlet(font='slant')
+    print(preview_text.renderText("HACKER"))
+    ip_target = input("Введите IP-адрес: ")
+    get_info_ip_address(ip=ip_target)
+
+if __name__ == '__main__':
+    main()
