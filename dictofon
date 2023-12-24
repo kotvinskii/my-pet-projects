@@ -1,0 +1,69 @@
+"""Библиотеки, необходимые для работы диктофона"""
+import wave
+import tkinter
+import os
+import time
+import threading
+import pyaudio
+
+
+class VoiceRecorder():
+    def __init__(self):
+        self.root = tkinter.Tk() # окно, где будет наша видеозапись
+        self.root.title("Аудиозапись")
+        self.root.resizable(False, False) # окно мы не растягиваем
+        self.button = tkinter.Button(
+            text='🎙️',
+            font=('Arial', 120, "bold"), # шрифт(номер, размер, жирность)
+            command=self.click_handler # срабатывает при нажатии на кнопку
+        )
+        self.button.pack()
+        self.label = tkinter.Label(text="00:00:00") # отображение время
+        self.label.pack()
+        self.recording = False # идет у нас запись или нет(по умолчанию стоит нет)
+        self.root.mainloop() # запуск программы
+
+    def click_handler(self): # нажатие на кнопку
+        if self.recording: # запись уже идет
+            self.recording = False
+        else:
+            self.recording = True
+            threading.Thread(target=self.record).start()
+
+    def recording_handler(self): # запись звука
+        audio = pyaudio.PyAudio()
+        stream = audio.open( # запись потока звука
+            format=pyaudio.paInt16,
+            channels=1, # каналы звука
+            rate=44100, # частота звука
+            input=True,
+            frames_per_buffer=1024 # количество кадров в буфере
+        )
+        frames = [] # кадры
+        start = time.time()
+        while self.recording: # пока идет запись
+            data = stream.read(1024, exception_on_overflow=False) # защита от переполнения буфера
+            frames.append(data)
+            passed_time = time.time() - start # сколько времени прошло с начала записи
+            seconds = passed_time % 60
+            minutes = passed_time // 60
+            hours = minutes // 60
+            self.label.config(text=f"{int(hours):02d}:{int(minutes):02d}:{int(seconds):02d}") # оформление времени
+
+        stream.stop_stream()
+        stream.close() # конец голосового потока
+        audio.terminate() # завершение сеанса
+
+        exists = True
+        i = 1
+        while exists:
+            if os.path.exists(f'recording{i}wav'): # существует ли файл recording{i}(порядковый номер файла) в директории
+                i += 1
+        """Запись файла в двоичном виде"""
+        sound_file = wave.open(f'recording.wav', 'wb')
+        sound_file.setnchannels(1)
+        sound_file.setsampwidth(audio.get_sample_size(pyaudio.paInt16))
+        sound_file.setframerate(44100)
+        sound_file.writeframes(b''.join(frames))
+        sound_file.close()
+VoiceRecorder()
