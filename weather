@@ -1,0 +1,27 @@
+import requests
+from bs4 import BeautifulSoup
+
+def check_weather(city):
+    """Получаем словарь с нашими user-agent"""
+    headers = {
+        "User-agent": "Ваш User-agent"
+    }
+    response = requests.get(f"https://www.google.com/search?q=погода+в+{city}", headers=headers)
+    """Наш html код с парсингом"""
+    soup = BeautifulSoup(response.text, "html.parser")
+    """Парсинг погоды"""
+    temp = soup.select("#wob_tm")[0].getText() # температура
+    title = soup.select("#wob_dc")[0].getText() # состояние
+    humid = soup.select("#wob_hm")[0].getText() # влажность
+    time = soup.select("#wob_dts")[0].getText() # время и дата
+    wind = soup.select("#wob_ws")[0].getText() # ветер
+
+    print(time)
+    print(title)
+    print(f"Температура: {temp}C")
+    print(f"Уровень влажности: {humid}%")
+    print(f"Скорость ветра: {wind}м/с")
+
+if __name__ == '__main__':
+    city = str(input("Город: "))
+    check_weather(city=city)
