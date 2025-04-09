@@ -1,0 +1,21 @@
+from countryinfo import CountryInfo
+from typing import List, Union
+
+def information_country(country_name: str): # указываем название страны на английском
+    country = CountryInfo(country_name)
+    lang: Union[List[str], None] = country.languages()
+    population: Union[int, None] = country.population()
+    capital: Union[str, None] = country.capital()
+    provinces: Union[List[str], None] = country.provinces()
+    money: Union[List[int], None] = country.currencies()
+    area: Union[int, None] = country.area()
+    print(f"Вся информация о {country_name}")
+    print(f"Языки:", *lang)
+    print(f"Население: ", population)
+    print(f"Площадь: {area: } км^2")
+    print(f"Столица: {capital}")
+    print(f"Деньги:", *money)
+    print(f"Регионы:", {', '.join(provinces)})
+
+country = input("Введите страну, о которой хотите найти информацию: ")
+print(information_country(country))
