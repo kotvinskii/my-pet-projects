@@ -11,9 +11,9 @@ def information_country(country_name: str): # указываем названи�
     area: Union[int, None] = country.area()
     print(f"Вся информация о {country_name}")
     print(f"Языки:", *lang)
-    print(f"Население: ", population)
-    print(f"Площадь: {area: } км^2")
-    print(f"Столица: {capital}")
+    print(f"Население:", population)
+    print(f"Площадь:{area: } км^2")
+    print(f"Столица:{capital}")
     print(f"Деньги:", *money)
     print(f"Регионы:", {', '.join(provinces)})
 
