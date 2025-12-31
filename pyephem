@@ -1,0 +1,76 @@
+import datetime
+
+import ephem as ep
+
+
+def info_moon(data: datetime.datetime):
+    moon = ep.Moon()
+    moon.compute(data)
+    return (f"ra: {moon.ra}, "
+            f"dec: {moon.dec} "
+            )
+
+def info_mercury(data: datetime.datetime):
+    mercury = ep.Mercury()
+    mercury.compute(data)
+    return (f"ra: {mercury.ra}, "
+            f"dec: {mercury.dec}, "
+            f"lat: {mercury.hlat}, "
+            f"lon: {mercury.hlon} "
+            )
+
+def info_venus(data: datetime.datetime):
+    venus = ep.Venus()
+    venus.compute(data)
+    return (f"ra: {venus.ra}, "
+            f"dec: {venus.dec} "
+            )
+
+def info_mars(data: datetime.datetime):
+    mars = ep.Mars()
+    mars.compute(data)
+    return (f"ra: {mars.ra}, "
+            f"dec: {mars.dec}, "
+            f"lat: {mars.hlat} "
+            )
+
+def info_jupiter(data: datetime.datetime):
+    jupiter = ep.Jupiter()
+    jupiter.compute(data)
+    return (f"ra: {jupiter.ra}, "
+            f"dec: {jupiter.dec} "
+            )
+
+def info_saturn(data: datetime.datetime):
+    saturn = ep.Saturn()
+    saturn.compute(data)
+    return (f"ra: {saturn.ra}, "
+            f"dec: {saturn.dec} "
+            )
+
+def info_uran(data: datetime.datetime):
+    uran = ep.Uranus()
+    uran.compute(data)
+    return (f"ra: {uran.ra}, "
+            f"dec: {uran.dec}, "
+            f"lat: {uran.hlat}, "
+            f"lon: {uran.hlon} "
+            )
+
+def info_neptune(data: datetime.datetime):
+    neptune = ep.Neptune()
+    neptune.compute(data)
+    return (f"ra: {neptune.ra}, "
+            f"dec: {neptune.dec}, "
+            f"lat: {neptune.hlat}, "
+            f"lon: {neptune.hlon} "
+            )
+
+print("Информация о луне: ", info_moon("1984/5/30 16:22:56"), sep='\n')
+print("Информация о меркурии: ", info_mercury("1984/5/30 16:22:56"), sep='\n')
+print("Информация о венере: ", info_venus("1984/5/30 16:22:56"), sep='\n')
+print("Информация о марсе: ", info_mars("1984/5/30 16:22:56"), sep='\n')
+print("Информация о юпитере: ", info_jupiter("1984/5/30 16:22:56"), sep='\n')
+print("Информация о сатурне: ", info_saturn("1984/5/30 16:22:56"), sep='\n')
+print("Информация о уране: ", info_uran("1984/5/30 16:22:56"), sep='\n')
+print("Информация о нептуне: ", info_neptune("1984/5/30 16:22:56"), sep='\n')
